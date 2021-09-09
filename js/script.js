@@ -1,5 +1,8 @@
 //set the "name" box to be focused on by default
-const nameFocus = document.getElementById("name").focus();
+const name = document.getElementById("name");
+const nameFocus = name.focus();
+const email = document.getElementById("email");
+console.log(email);
 const otherJobRole = document.getElementById("other-job-role");
 const jobRole = document.getElementById("title");
 //set the "other job role" box to be invisible by default.
@@ -9,12 +12,12 @@ const shirtColors = document.getElementById('color');
 shirtColors.disabled = true;
 //grab design ID
 const design = document.getElementById('design');
-console.log(design);
+// console.log(design);
 //grab fieldset
 const inputActivities = document.querySelectorAll('#activities input');
-console.log(inputActivities);
+// console.log(inputActivities);
 let act = document.querySelector('.activities-cost');
-console.log(act);
+// console.log(act);
 let totalCost = 0;
 // grab payment ID
 const payment = document.getElementById('payment');
@@ -22,16 +25,19 @@ const selectMethod = payment.querySelector('option:nth-child(2)');
 const creditCard = document.getElementById('credit-card');
 const paypal = document.querySelector('#paypal');
 const bitcoin = document.querySelector('#bitcoin');
-// const creditCard = document.querySelector('[value=credit-card]');
-// const paypal = document.querySelector('[value=paypal');
-// const bitcoin = document.querySelector('[value=bitcoin');
+
+//grabbing <form>
+const form = document.querySelector('form');
+
 paypal.hidden = true;
 bitcoin.hidden = true;
 selectMethod.selected = true;
-console.log('test line 28', selectMethod);
-console.log(paypal);
-console.log(bitcoin);
-console.log(creditCard);
+// console.log('test line 28', selectMethod);
+// console.log(paypal);
+// console.log(bitcoin);
+// console.log(creditCard);
+// console.log('Form grab test', form);
+// console.log("test input", inputActivities);
 
 
 
@@ -50,10 +56,10 @@ design.addEventListener('change', (e) => {
   // console.log(event.target.value);
   const targ = e.target.value;
   const dataT = shirtColors.querySelectorAll('option');
-  console.log(dataT);
+  // console.log(dataT);
   // const dataT = shirtColors.children;
   // const designOpt = design.querySelectorAll('option');
-  console.log(typeof targ);
+  // console.log(typeof targ);
   shirtColors.disabled = false;
   // const designOptAtr = designOpt.getAttribute("data-theme");
   // const designOptAtr = designOpt.querySelectorAll('[data-theme="js puns"]');
@@ -65,7 +71,7 @@ design.addEventListener('change', (e) => {
 
   for (let i = 0; i < dataT.length; i++) {
     const dataTheme = dataT[i].dataset.theme;
-    console.log(dataTheme);
+    // console.log(dataTheme);
 
     if (targ === dataTheme) {
       dataT[i].hidden = false;
@@ -118,11 +124,11 @@ document.querySelector('#activities').addEventListener('change', (e) => {
 
   if (clicked.checked) {
     totalCost += clickedCost;
-    console.log(totalCost);
+    // console.log(totalCost);
     act.textContent = `Total: ${totalCost}`;
   } else if (clicked.checked === false) {
     totalCost -= clickedCost;
-    console.log(totalCost);
+    // console.log(totalCost);
     act.textContent = `Total: ${totalCost}`;
   }
   // for (let i = 0; i < inputActivities.length; i++) {
@@ -143,16 +149,44 @@ payment.addEventListener('change', (e) => {
     paypal.hidden = false;
     creditCard.hidden = true;
     bitcoin.hidden = true;
-    console.log("paypal check works")
+    // console.log("paypal check works")
   } else if (target === 'bitcoin') {
     bitcoin.hidden = false;
     creditCard.hidden = true;
     paypal.hidden = true;
-    console.log("bitcoin test works")
+    // console.log("bitcoin test works")
   } else if (target === 'credit-card') {
     creditCard.hidden = false;
     paypal.hidden = true;
     bitcoin.hidden = true;
-    console.log('credit-card check works')
+    // console.log('credit-card check works')
+  }
+})
+
+// Form Validation
+const nameValidator = () => {
+  const nameValue = name.value;
+  const nameIsValid = /^[a-zA-Z]+ ?[a-zA-Z]*? ?[a-zA-Z]+?$/.test(nameValue);
+  console.log('The value for this is:', nameIsValid);
+  return nameIsValid;
+}
+
+const emailValidator = () => {
+  const emailValue = email.value;
+  const emailIsValid = /^[^@]+@[^@.]+\.[a-z]+$/i.test(emailValue);
+  return emailIsValid;
+}
+
+
+form.addEventListener('submit', (e) => {
+  // nameValidator();
+  emailValidator();
+
+  if (!nameValidator()) {
+    e.preventDefalut();
+  }
+
+  if (!emailValidator()) {
+    e.preventDefault();
   }
 })
