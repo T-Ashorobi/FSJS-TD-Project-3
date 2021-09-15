@@ -2,7 +2,7 @@
 const name = document.getElementById("name");
 const nameFocus = name.focus();
 const email = document.getElementById("email");
-console.log(email);
+// console.log(email);
 const otherJobRole = document.getElementById("other-job-role");
 const jobRole = document.getElementById("title");
 //set the "other job role" box to be invisible by default.
@@ -15,7 +15,11 @@ const design = document.getElementById('design');
 // console.log(design);
 //grab fieldset
 const inputActivities = document.querySelectorAll('#activities input');
-// console.log(inputActivities);
+console.log(inputActivities);
+const activitiesBox = document.getElementById('activities-box');
+console.log(activitiesBox);
+const activities = document.getElementById('activities');
+console.log(activities);
 let act = document.querySelector('.activities-cost');
 // console.log(act);
 let totalCost = 0;
@@ -26,8 +30,18 @@ const creditCard = document.getElementById('credit-card');
 const paypal = document.querySelector('#paypal');
 const bitcoin = document.querySelector('#bitcoin');
 
+//Card #, Zip Code, CVV
+const cc = document.getElementById('cc-num');
+// console.log(cc);
+const zip = document.getElementById('zip');
+// console.log(zip);
+const cvv = document.getElementById('cvv');
+// console.log(cvv);
+
+
 //grabbing <form>
 const form = document.querySelector('form');
+// console.log(form);
 
 paypal.hidden = true;
 bitcoin.hidden = true;
@@ -39,6 +53,58 @@ selectMethod.selected = true;
 // console.log('Form grab test', form);
 // console.log("test input", inputActivities);
 
+// validation pass and validation fail
+function validationPass(element) {
+  element.parentElement.className = 'valid';
+  element.parentElement.classList.remove('not-valid');
+  element.parentElement.lastElementChild.hidden = true;
+}
+
+function validationFail(element) {
+  element.parentElement.className = 'not-valid';
+  element.parentElement.classList.remove('valid');
+  element.parentElement.lastElementChild.hidden = false;
+}
+
+//focus state 
+function focusTab(element) {
+  element.parentElement.className = 'focus';
+}
+
+function offFocus(element) {
+  element.parentElement.classList.remove('focus');
+}
+
+for (let i = 0; i < inputActivities.length; i++) {
+  activities.addEventListener('focus', e => {
+    const eTarget = e.target;
+    if (inputActivities[i] === eTarget) {
+      inputActivities[i].className = 'focus';
+      if (inputActivities[i].className === 'focus') {
+        inputActivities[i].style.border = 'red';
+      }
+    }
+  })
+
+
+  // inputActivities[i].addEventListener('focus', e => {
+  //   const eTarget = e.target;
+  //   if (inputActivities[i] === eTarget) {
+  //     inputActivities[i].className = 'focus';
+  //     if (inputActivities[i].className === 'focus') {
+  //       inputActivities[i].style.background = 'red';
+  //     }
+  //   }
+  // })
+
+  // inputActivities[i].addEventListener('focus', e => {
+  //   e.target.style.background = 'red';
+  // }, true);
+
+  // inputActivities[i].addEventListener('blur', e => {
+  //   e.target.style.background = '';
+  // }, true);
+}
 
 
 // Listen to for a change in Job Role. If other is picked then "Other Job Role" box should appear for the user to input info. Here is a link to a video that helped me understand this part of the project: https://www.youtube.com/watch?v=kXPr_HvBPqM
@@ -51,7 +117,7 @@ jobRole.addEventListener('change', (e) => {
 });
 
 //Listen for a change in the select portion of design
-//What i want to do here is to see the event listener listen for a change from the design drop down. Create a variable for e.target.value and a variable for the data-theme. Create an if statement where if the e.target.value matches the selected design option value then i'll create a statement within the code block, else if it matches the other design value then the other code block will run. 
+//What i want to do here is to have the event listener listen for a change from the design drop down. Create a variable for e.target.value and a variable for the data-theme. Create an IF statement where if the e.target.value matches the selected design option value then i'll create a statement within the code block, else if it matches the other design value then the other code block will run. 
 design.addEventListener('change', (e) => {
   // console.log(event.target.value);
   const targ = e.target.value;
@@ -118,9 +184,9 @@ design.addEventListener('change', (e) => {
 document.querySelector('#activities').addEventListener('change', (e) => {
   let clicked = e.target;
   let clickedCost = +clicked.dataset.cost;
-  console.log(clickedCost);
-  console.log(typeof clickedCost);
-  console.log(clicked);
+  // console.log(clickedCost);
+  // console.log(typeof clickedCost);
+  // console.log(clicked);
 
   if (clicked.checked) {
     totalCost += clickedCost;
@@ -167,26 +233,150 @@ payment.addEventListener('change', (e) => {
 const nameValidator = () => {
   const nameValue = name.value;
   const nameIsValid = /^[a-zA-Z]+ ?[a-zA-Z]*? ?[a-zA-Z]+?$/.test(nameValue);
-  console.log('The value for this is:', nameIsValid);
+  console.log('The value for nameIsValid is:', nameIsValid);
+  alert("Please input a valid First name and Last name.");
+
+  if (nameIsValid) {
+    validationPass(name);
+  } else {
+    validationFail(name);
+  }
+
   return nameIsValid;
 }
 
 const emailValidator = () => {
   const emailValue = email.value;
   const emailIsValid = /^[^@]+@[^@.]+\.[a-z]+$/i.test(emailValue);
+  console.log("The value for emailIsValid is:", emailIsValid);
+  alert("Please input a valid email address.");
+
+  if (emailIsValid) {
+    validationPass(email);
+  } else {
+    validationFail(email);
+  }
+
   return emailIsValid;
 }
 
+const activitiesValidator = () => {
+  const activitiesValidatorIsValid = totalCost > 0;
+  console.log("the value of activitiesValidatorIsValid is:", activitiesValidatorIsValid);
+  alert("Please select at least one activity.");
+
+  // Using passing in "activities" in "validationPass" the red border bleeds into Exp Date, Exp Year and the caution sign is in the top right corner of the screen? 
+  if (activitiesValidatorIsValid) {
+    validationPass(activities);
+  } else {
+    validationFail(activities);
+  }
+
+  // I prefer to use activitesBox
+  // if (activitiesValidatorIsValid) {
+  //   validationPass(activitiesBox);
+  // } else {
+  //   validationFail(activitiesBox);
+  // }
+
+  return activitiesValidatorIsValid;
+
+  // for (let i = 0; i < inputActivities.length; i++) {
+  //   if (activitiesValidatorIsValid) {
+  //     validationPass(i);
+  //   } else {
+  //     validationFail(i);
+  //   }
+  // }
+}
+
+const ccValidator = () => {
+  const ccValue = cc.value;
+  const ccIsValid = /^\d{13,16}$/.test(ccValue);
+  console.log('The value for ccIsValid is:', ccIsValid);
+  alert("Please enter a valid 13 to 16 digit credit card number.");
+
+  if (ccIsValid) {
+    validationPass(cc);
+  } else {
+    validationFail(cc);
+  }
+
+  return ccIsValid;
+}
+
+const zipValidator = () => {
+  const zipValue = zip.value;
+  const zipIsValid = /^\d{5}$/.test(zipValue);
+  console.log('The value for zipIsValid is:', zipIsValid);
+  alert("Please enter a valid 5 digit zip code.");
+
+  if (zipIsValid) {
+    validationPass(zip);
+  } else {
+    validationFail(zip);
+  }
+
+  return zipIsValid;
+}
+
+const cvvValidator = () => {
+  const cvvValue = cvv.value;
+  const cvvIsValid = /^\d{3}$/.test(cvvValue);
+  console.log('The Value for cvvIsValid is:', cvvIsValid);
+  alert("Please input a 3 digit CVV code found on the back of your Credit Card.")
+
+  if (cvvIsValid) {
+    validationPass(cvv);
+  } else {
+    validationFail(cvv);
+  }
+
+  return cvvIsValid;
+}
+
+//A great video explaning the method of "preventDefault": https://www.youtube.com/watch?v=3SNyh57XSIA
 
 form.addEventListener('submit', (e) => {
+  // e.preventDefault();
   // nameValidator();
-  emailValidator();
+  // emailValidator();
 
   if (!nameValidator()) {
-    e.preventDefalut();
+    e.preventDefault();
+    console.log("the nameValidator IF statement works");
   }
 
-  if (!emailValidator()) {
+  if (emailValidator() === false) {
     e.preventDefault();
+    console.log("The emailValidator IF statement works");
+  }
+
+  if (!activitiesValidator()) {
+    e.preventDefault();
+    console.log("The activitiesValidator IF statement works.");
+  }
+
+  if (!ccValidator()) {
+    e.preventDefault();
+    console.log("The ccValidator IF statement works.");
+  }
+
+  if (!zipValidator()) {
+    e.preventDefault();
+    console.log("The zipValidator IF statement works.");
+  }
+
+  if (!cvvValidator()) {
+    e.preventDefault();
+    console.log('The cvvValidator IF statement works.');
   }
 })
+
+//Listen for change in fieldset to check for focus and blur events. 
+
+// activities.addEventListener('focus', (e) => {
+//   const eventTarget = e.target;
+//   eventTarget.style.background = 'red';
+//   focusTab();
+// })
