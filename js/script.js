@@ -18,6 +18,20 @@ shirtColors.disabled = true;
 const design = document.getElementById('design');
 // console.log(design);
 
+//grab the hints
+const nameHint = document.querySelector('.name-hint');
+console.log(nameHint);
+const emailHint = document.querySelector('.email-hint');
+console.log(emailHint);
+const activitiesHint = document.querySelector('.activities-hint');
+console.log(activitiesHint);
+const ccHint = document.querySelector('.cc-hint');
+console.log(ccHint);
+const zipHint = document.querySelector('.zip-hint');
+console.log(zipHint);
+const cvvHint = document.querySelector('.cvv-hint');
+console.log(cvvHint);
+
 //grab fieldset
 const inputActivities = document.querySelectorAll('#activities input');
 console.log('activities to input', inputActivities);
@@ -60,6 +74,8 @@ const form = document.querySelector('form');
 // console.log(form);
 
 
+
+
 const activityLabel = document.querySelectorAll('.activities-box label');
 console.log(activityLabel);
 
@@ -74,11 +90,14 @@ function validationFail(element) {
   element.parentElement.className = 'not-valid';
   element.parentElement.classList.remove('valid');
   element.parentElement.lastElementChild.hidden = false;
+
 }
 
 
 //Now this makes sense below. The four loop is there to iterate through all the <input> that contain the checkbox type. The thing is that the checkbox does get the "focus" but you dont see it much so we move it up to the <label> which will have more of a pop. To do this with all of the <input> we need to loop through them all and add the "focus" event. IF the [i] is equal to the e.target then we'll add the class name of "focus" to the parentNode which is the <label>.
 //To add the "blur" event I was having issue trying to get this to work. I knew initially the structure will be similar to what I wrote for the "focus" event to run, but it wasn't working and I didnt understand why. I was going down a rabbit hole not knowing what I was doing was correct or not. With the aid of a student in class I was able to figure it out. What I always thought was that when you attach an eventListner it needed to be a parent container and in this case I thought it was the 'activites' variable. But in actuality if I switch out the 'activites' variable for the "inputActivities[i]" it works better because were listening for changes with each individual node list. Thus why we needed the For Loop. So what i wrote before attaching the eventListner to the activities does not take into account each individual input. So I learned something new. 
+
+// This video explains what "focus" and "blur" is: https://www.youtube.com/watch?v=AdaomMXmpYg
 
 /* setting "focus" and "blur" on activities section to make more accessible. */
 for (let i = 0; i < inputActivities.length; i++) {
@@ -232,14 +251,15 @@ const nameValidator = () => {
   const nameValue = name.value;
   const nameIsValid = /^[a-zA-Z]+ ?[a-zA-Z]*? ?[a-zA-Z]+?$/.test(nameValue);
   console.log('The value for nameIsValid is:', nameIsValid);
-  alert("Please input a valid First name and Last name.");
+  // alert("Please input a valid First name.");
 
   if (nameIsValid) {
     validationPass(name);
+    nameHint.style.display = 'none';
   } else {
     validationFail(name);
+    nameHint.style.display = 'block';
   }
-
   return nameIsValid;
 }
 
@@ -247,12 +267,14 @@ const emailValidator = () => {
   const emailValue = email.value;
   const emailIsValid = /^[^@]+@[^@.]+\.[a-z]+$/i.test(emailValue);
   console.log("The value for emailIsValid is:", emailIsValid);
-  alert("Please input a valid email address.");
+  // alert("Please input a valid email address.");
 
   if (emailIsValid) {
     validationPass(email);
+    emailHint.style.display = 'none';
   } else {
     validationFail(email);
+    emailHint.style.display = 'block';
   }
 
   return emailIsValid;
@@ -261,14 +283,16 @@ const emailValidator = () => {
 const activitiesValidator = () => {
   const activitiesValidatorIsValid = totalCost > 0;
   console.log("the value of activitiesValidatorIsValid is:", activitiesValidatorIsValid);
-  alert("Please select at least one activity.");
+  // alert("Please select at least one activity.");
 
   // Using passing in "activities" in "validationPass" the red border bleeds into Exp Date, Exp Year and the caution sign is in the top right corner of the screen? 
 
   if (activitiesValidatorIsValid) {
     validationPass(activities);
+    activitiesHint.style.display = 'none';
   } else {
     validationFail(activities);
+    activitiesHint.style.display = 'block';
   }
 
   // I prefer to use activitesBox
@@ -293,12 +317,14 @@ const ccValidator = () => {
   const ccValue = cc.value;
   const ccIsValid = /^\d{13,16}$/.test(ccValue);
   console.log('The value for ccIsValid is:', ccIsValid);
-  alert("Please enter a valid 13 to 16 digit credit card number.");
+  // alert("Please enter a valid 13 to 16 digit credit card number.");
 
   if (ccIsValid) {
     validationPass(cc);
+    ccHint.style.display = 'none';
   } else {
     validationFail(cc);
+    ccHint.style.display = 'block';
   }
 
   return ccIsValid;
@@ -308,12 +334,14 @@ const zipValidator = () => {
   const zipValue = zip.value;
   const zipIsValid = /^\d{5}$/.test(zipValue);
   console.log('The value for zipIsValid is:', zipIsValid);
-  alert("Please enter a valid 5 digit zip code.");
+  // alert("Please enter a valid 5 digit zip code.");
 
   if (zipIsValid) {
     validationPass(zip);
+    zipHint.style.display = 'none';
   } else {
     validationFail(zip);
+    zipHint.style.display = 'block';
   }
 
   return zipIsValid;
@@ -323,12 +351,14 @@ const cvvValidator = () => {
   const cvvValue = cvv.value;
   const cvvIsValid = /^\d{3}$/.test(cvvValue);
   console.log('The Value for cvvIsValid is:', cvvIsValid);
-  alert("Please input a 3 digit CVV code found on the back of your Credit Card.")
+  // alert("Please input a 3 digit CVV code found on the back of your Credit Card.")
 
   if (cvvIsValid) {
     validationPass(cvv);
+    cvvHint.style.display = 'none';
   } else {
     validationFail(cvv);
+    cvvHint.style.display = 'block';
   }
 
   return cvvIsValid;
