@@ -1,21 +1,26 @@
 //set the "name" box to be focused on by default
 const name = document.getElementById("name");
 const nameFocus = name.focus();
+// reference to email
 const email = document.getElementById("email");
 // console.log(email);
 const otherJobRole = document.getElementById("other-job-role");
 const jobRole = document.getElementById("title");
+
 //set the "other job role" box to be invisible by default.
 otherJobRole.style.display = 'none';
+
 //Disable shirt color options as default. 
 const shirtColors = document.getElementById('color');
 shirtColors.disabled = true;
+
 //grab design ID
 const design = document.getElementById('design');
 // console.log(design);
+
 //grab fieldset
 const inputActivities = document.querySelectorAll('#activities input');
-console.log(inputActivities);
+console.log('activities to input', inputActivities);
 const activitiesBox = document.getElementById('activities-box');
 console.log(activitiesBox);
 const activities = document.getElementById('activities');
@@ -23,6 +28,7 @@ console.log(activities);
 let act = document.querySelector('.activities-cost');
 // console.log(act);
 let totalCost = 0;
+
 // grab payment ID
 const payment = document.getElementById('payment');
 const selectMethod = payment.querySelector('option:nth-child(2)');
@@ -30,19 +36,7 @@ const creditCard = document.getElementById('credit-card');
 const paypal = document.querySelector('#paypal');
 const bitcoin = document.querySelector('#bitcoin');
 
-//Card #, Zip Code, CVV
-const cc = document.getElementById('cc-num');
-// console.log(cc);
-const zip = document.getElementById('zip');
-// console.log(zip);
-const cvv = document.getElementById('cvv');
-// console.log(cvv);
-
-
-//grabbing <form>
-const form = document.querySelector('form');
-// console.log(form);
-
+//Hide paypal and bitcoin if not selected and set Credit Card as initial option.
 paypal.hidden = true;
 bitcoin.hidden = true;
 selectMethod.selected = true;
@@ -52,6 +46,19 @@ selectMethod.selected = true;
 // console.log(creditCard);
 // console.log('Form grab test', form);
 // console.log("test input", inputActivities);
+
+//Card #, Zip Code, CVV
+const cc = document.getElementById('cc-num');
+// console.log(cc);
+const zip = document.getElementById('zip');
+// console.log(zip);
+const cvv = document.getElementById('cvv');
+// console.log(cvv);
+
+//grabbing <form>
+const form = document.querySelector('form');
+// console.log(form);
+
 
 const activityLabel = document.querySelectorAll('.activities-box label');
 console.log(activityLabel);
@@ -69,31 +76,35 @@ function validationFail(element) {
   element.parentElement.lastElementChild.hidden = false;
 }
 
-//focus state 
-function focusTab(element) {
-  element.parentElement.className = 'focus';
-}
 
-function offFocus(element) {
-  element.parentElement.classList.remove('focus');
-}
+//Now this makes sense below. The four loop is there to iterate through all the <input> that contain the checkbox type. The thing is that the checkbox does get the "focus" but you dont see it much so we move it up to the <label> which will have more of a pop. To do this with all of the <input> we need to loop through them all and add the "focus" event. IF the [i] is equal to the e.target then we'll add the class name of "focus" to the parentNode which is the <label>.
+//To add the "blur" event I was having issue trying to get this to work. I knew initially the structure will be similar to what I wrote for the "focus" event to run, but it wasn't working and I didnt understand why. I was going down a rabbit hole not knowing what I was doing was correct or not. With the aid of a student in class I was able to figure it out. What I always thought was that when you attach an eventListner it needed to be a parent container and in this case I thought it was the 'activites' variable. But in actuality if I switch out the 'activites' variable for the "inputActivities[i]" it works better because were listening for changes with each individual node list. Thus why we needed the For Loop. So what i wrote before attaching the eventListner to the activities does not take into account each individual input. So I learned something new. 
 
+/* setting "focus" and "blur" on activities section to make more accessible. */
 for (let i = 0; i < inputActivities.length; i++) {
-  activities.addEventListener('focus', e => {
+  inputActivities[i].addEventListener('focus', e => {
     const eTarget = e.target;
     if (inputActivities[i] === eTarget) {
       inputActivities[i].parentNode.className = 'focus';
-      // if (inputActivities[i].parentNode.className === 'focus') {
-      //   inputActivities[i].style.backgroundColor = 'red';
-      // }
     }
-  }, true);
+  });
 
-  activities.addEventListener('blur', e => {
+  // activities.addEventListener('focus', e => {
+  //   const eTarget = e.target;
+  //   if (inputActivities[i] === eTarget) {
+  //     inputActivities[i].parentNode.className = 'focus';
+  //     if (inputActivities[i].parentNode.className === 'focus') {
+  //       inputActivities[i].style.backgroundColor = 'red';
+  //     }
+  //   }
+  // }, true);
+
+  inputActivities[i].addEventListener('blur', e => {
     // const eTag = e.target;
+    const eTarget = e.target;
     if (inputActivities[i] === eTarget) {
-      // inputActivities[i].parentNode.classList.remove("focus");
-      eTarget.parentNode.classList.remove('focus');
+      inputActivities[i].parentNode.classList.remove("focus");
+      // eTarget.parentNode.classList.remove('focus');
     }
   })
 
@@ -101,21 +112,6 @@ for (let i = 0; i < inputActivities.length; i++) {
 
 }
 
-// if it equals focus then remove the the class name of focus
-
-// for (let i = 0; i < activityLabel.length; i++) {
-//   form.addEventListener('blur', e => {
-//     const eTarget = e.target;
-//     if (activityLabel[i] === eTarget) {
-//       activityLabel[i].classList.remove('focus');
-//     }
-
-//     // inputActivities[i].parentNode.classList.remove('focus');
-//     // if (inputActivities[i].parentNode.className === 'focus') {
-//     //   inputActivities[i].parentNode.classList.remove('focus');
-//     // }
-//   })
-// }
 
 // Listen to for a change in Job Role. If other is picked then "Other Job Role" box should appear for the user to input info. Here is a link to a video that helped me understand this part of the project: https://www.youtube.com/watch?v=kXPr_HvBPqM
 jobRole.addEventListener('change', (e) => {
@@ -207,14 +203,6 @@ document.querySelector('#activities').addEventListener('change', (e) => {
     // console.log(totalCost);
     act.textContent = `Total: ${totalCost}`;
   }
-  // for (let i = 0; i < inputActivities.length; i++) {
-  //   const checkboxCost = inputActivities[i].dataset.cost;
-  //   if (clickedCost === checkboxCost) {
-  //     if (clicked.checked) {
-
-  //     }
-  //   }
-  // }
 })
 
 // Payment Info
@@ -276,6 +264,7 @@ const activitiesValidator = () => {
   alert("Please select at least one activity.");
 
   // Using passing in "activities" in "validationPass" the red border bleeds into Exp Date, Exp Year and the caution sign is in the top right corner of the screen? 
+
   if (activitiesValidatorIsValid) {
     validationPass(activities);
   } else {
@@ -346,6 +335,8 @@ const cvvValidator = () => {
 }
 
 //A great video explaning the method of "preventDefault": https://www.youtube.com/watch?v=3SNyh57XSIA
+
+//Submit information section
 
 form.addEventListener('submit', (e) => {
   // e.preventDefault();
