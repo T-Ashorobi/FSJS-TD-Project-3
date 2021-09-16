@@ -53,6 +53,9 @@ selectMethod.selected = true;
 // console.log('Form grab test', form);
 // console.log("test input", inputActivities);
 
+const activityLabel = document.querySelectorAll('.activities-box label');
+console.log(activityLabel);
+
 // validation pass and validation fail
 function validationPass(element) {
   element.parentElement.className = 'valid';
@@ -79,33 +82,40 @@ for (let i = 0; i < inputActivities.length; i++) {
   activities.addEventListener('focus', e => {
     const eTarget = e.target;
     if (inputActivities[i] === eTarget) {
-      inputActivities[i].className = 'focus';
-      if (inputActivities[i].className === 'focus') {
-        inputActivities[i].style.border = 'red';
-      }
+      inputActivities[i].parentNode.className = 'focus';
+      // if (inputActivities[i].parentNode.className === 'focus') {
+      //   inputActivities[i].style.backgroundColor = 'red';
+      // }
+    }
+  }, true);
+
+  activities.addEventListener('blur', e => {
+    // const eTag = e.target;
+    if (inputActivities[i] === eTarget) {
+      // inputActivities[i].parentNode.classList.remove("focus");
+      eTarget.parentNode.classList.remove('focus');
     }
   })
 
+  // if (inputActivities[i] === eTarget && inputActivities[i].parentNode.className === 'focus')
 
-  // inputActivities[i].addEventListener('focus', e => {
-  //   const eTarget = e.target;
-  //   if (inputActivities[i] === eTarget) {
-  //     inputActivities[i].className = 'focus';
-  //     if (inputActivities[i].className === 'focus') {
-  //       inputActivities[i].style.background = 'red';
-  //     }
-  //   }
-  // })
-
-  // inputActivities[i].addEventListener('focus', e => {
-  //   e.target.style.background = 'red';
-  // }, true);
-
-  // inputActivities[i].addEventListener('blur', e => {
-  //   e.target.style.background = '';
-  // }, true);
 }
 
+// if it equals focus then remove the the class name of focus
+
+// for (let i = 0; i < activityLabel.length; i++) {
+//   form.addEventListener('blur', e => {
+//     const eTarget = e.target;
+//     if (activityLabel[i] === eTarget) {
+//       activityLabel[i].classList.remove('focus');
+//     }
+
+//     // inputActivities[i].parentNode.classList.remove('focus');
+//     // if (inputActivities[i].parentNode.className === 'focus') {
+//     //   inputActivities[i].parentNode.classList.remove('focus');
+//     // }
+//   })
+// }
 
 // Listen to for a change in Job Role. If other is picked then "Other Job Role" box should appear for the user to input info. Here is a link to a video that helped me understand this part of the project: https://www.youtube.com/watch?v=kXPr_HvBPqM
 jobRole.addEventListener('change', (e) => {
