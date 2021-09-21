@@ -13,6 +13,15 @@ otherJobRole.style.display = 'none';
 //Disable shirt color options as default. 
 const shirtColors = document.getElementById('color');
 shirtColors.disabled = true;
+const defaultJsPuns = shirtColors.querySelector('option:nth-child(2)');
+console.log(defaultJsPuns);
+const defaultLoveJs = shirtColors.querySelector('option:nth-child(5)');
+console.log(defaultLoveJs);
+
+//show specific colors shirt list
+// const heartJs = shirtColors.querySelectorAll('option:nth-child(3n)');
+// console.log(heartJs);
+
 
 //grab design ID
 const design = document.getElementById('design');
@@ -142,6 +151,7 @@ jobRole.addEventListener('change', (e) => {
 });
 
 //Listen for a change in the select portion of design
+
 //What i want to do here is to have the event listener listen for a change from the design drop down. Create a variable for e.target.value and a variable for the data-theme. Create an IF statement where if the e.target.value matches the selected design option value then i'll create a statement within the code block, else if it matches the other design value then the other code block will run. 
 design.addEventListener('change', (e) => {
   // console.log(event.target.value);
@@ -152,6 +162,7 @@ design.addEventListener('change', (e) => {
   // const designOpt = design.querySelectorAll('option');
   // console.log(typeof targ);
   shirtColors.disabled = false;
+
   // const designOptAtr = designOpt.getAttribute("data-theme");
   // const designOptAtr = designOpt.querySelectorAll('[data-theme="js puns"]');
   // console.log(dataT);
@@ -160,15 +171,35 @@ design.addEventListener('change', (e) => {
   // console.log(dataT.dataset.theme);
 
 
+
   for (let i = 0; i < dataT.length; i++) {
     const dataTheme = dataT[i].dataset.theme;
     // console.log(dataTheme);
 
+    // if (targ === dataTheme) {
+    //   dataT[i].hidden = false;
+    // } else {
+    //   dataT[i].hidden = true;
+    // }
+
     if (targ === dataTheme) {
-      dataT[i].hidden = false;
-    } else {
-      dataT[i].hidden = true;
+      if (dataTheme === 'js puns') {
+        dataT[i].hidden = false;
+        defaultJsPuns.selected;
+      } else if (dataTheme === 'heart js') {
+        dataT[i].hidden = false;
+        defaultLoveJs.selected;
+      }
     }
+
+    // if (targ === dataTheme && 'js puns') {
+    //   defaultJsPuns.selected;
+    //   dataT[i].hidden = false;
+    // } else if (targ === dataTheme && 'heart js') {
+    //   defaultLoveJs.selected;
+    //   dataT[i].hidden = false;
+    // }
+
     // This section took a long time for me to understand. I decided to refer to the walkthough for this portion and from what I understood I wrote the code written below. Now when I read this its more clear. If true then the options the [i] is on isn't hidden, else the other set of [i] is hidden. 
 
     // if (targ === dataTheme && dataT[i].dataset.theme) {
