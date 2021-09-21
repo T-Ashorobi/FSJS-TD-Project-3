@@ -48,9 +48,12 @@ const activitiesBox = document.getElementById('activities-box');
 console.log(activitiesBox);
 const activities = document.getElementById('activities');
 console.log(activities);
+const activityLegend = document.querySelector('.activities legend');
+console.log(activityLegend);
 let act = document.querySelector('.activities-cost');
 // console.log(act);
 let totalCost = 0;
+
 
 // grab payment ID
 const payment = document.getElementById('payment');
@@ -316,15 +319,16 @@ const activitiesValidator = () => {
   console.log("the value of activitiesValidatorIsValid is:", activitiesValidatorIsValid);
   // alert("Please select at least one activity.");
 
-  // Using passing in "activities" in "validationPass" the red border bleeds into Exp Date, Exp Year and the caution sign is in the top right corner of the screen? 
+  //Passing in "activities" in "validationPass" the red border bleeds into Exp Date, Exp Year and the caution sign is in the top right corner of the screen? 
 
-  if (activitiesValidatorIsValid) {
-    validationPass(activities);
-    activitiesHint.style.display = 'none';
-  } else {
-    validationFail(activities);
-    activitiesHint.style.display = 'block';
-  }
+  // Using 'activities' erases or pushed the button out of frame when at least one activity is selected. 
+  // if (activitiesValidatorIsValid) {
+  //   validationPass(activities);
+  //   activitiesHint.style.display = 'none';
+  // } else {
+  //   validationFail(activities);
+  //   activitiesHint.style.display = 'block';
+  // }
 
   // I prefer to use activitesBox
   // if (activitiesValidatorIsValid) {
@@ -332,6 +336,12 @@ const activitiesValidator = () => {
   // } else {
   //   validationFail(activitiesBox);
   // }
+
+  if (activitiesValidatorIsValid) {
+    validationPass(activityLegend);
+  } else {
+    validationFail(activityLegend);
+  }
 
   return activitiesValidatorIsValid;
 
