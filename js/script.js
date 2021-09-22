@@ -177,6 +177,7 @@ design.addEventListener('change', (e) => {
   // console.log(typeof targ);
   shirtColors.disabled = false;
 
+  //Below I needed to create this to have a default behavior once a design is selected. I had an issue where if I selected a design then chose a color and then decided to switch my design the original color I chose does not automatically update. Now when I choose a design I gave it a default color, and if I switch designs it'll automatically switch to the other designs default color.  
   if (targ === 'js puns') {
     defaultJsPuns.selected = true;
   } else if (targ === 'heart js') {
