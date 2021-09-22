@@ -29,27 +29,27 @@ const design = document.getElementById('design');
 
 //grab the hints
 const nameHint = document.querySelector('.name-hint');
-console.log(nameHint);
+// console.log(nameHint);
 const emailHint = document.querySelector('.email-hint');
-console.log(emailHint);
+// console.log(emailHint); 
 const activitiesHint = document.querySelector('.activities-hint');
-console.log(activitiesHint);
+// console.log(activitiesHint);
 const ccHint = document.querySelector('.cc-hint');
-console.log(ccHint);
+// console.log(ccHint);
 const zipHint = document.querySelector('.zip-hint');
-console.log(zipHint);
+// console.log(zipHint);
 const cvvHint = document.querySelector('.cvv-hint');
-console.log(cvvHint);
+// console.log(cvvHint);
 
 //grab fieldset
 const inputActivities = document.querySelectorAll('#activities input');
 console.log('activities to input', inputActivities);
 const activitiesBox = document.getElementById('activities-box');
-console.log(activitiesBox);
+// console.log(activitiesBox);
 const activities = document.getElementById('activities');
-console.log(activities);
+// console.log(activities);
 const activityLegend = document.querySelector('.activities legend');
-console.log(activityLegend);
+// console.log(activityLegend);
 let act = document.querySelector('.activities-cost');
 // console.log(act);
 let totalCost = 0;
@@ -92,14 +92,23 @@ const activityLabel = document.querySelectorAll('.activities-box label');
 console.log(activityLabel);
 
 // validation pass and validation fail
+
+//Below what is commented out under was the issue. The className was overriding the classes that were there before. For the other elements being validated there wasn't an issue but for the Activities section it would "shrink" as @sradms0 said. The shirnk was a result of the reassignment of the class attribute, so meaning that class css was not connecting which resulted in the breakdown of the styiling, and thus the basic looking HTML structure. 
+
+// Also one thing I must keep in mind now is if a breakdown like this happens I should always keep an eye out on that specific element to see if there are any changes like this. The change in class or reassignment of it maybe the issue. 
+
+//This video helped me understand classList and its methods of classList.add and classList.remove. https://www.youtube.com/watch?v=FKQkx-wGexo
+
 function validationPass(element) {
-  element.parentElement.className = 'valid';
+  // element.parentElement.className = 'valid';
+  element.parentElement.classList.add('valid');
   element.parentElement.classList.remove('not-valid');
   element.parentElement.lastElementChild.hidden = true;
 }
 
 function validationFail(element) {
-  element.parentElement.className = 'not-valid';
+  //element.parentElement.className = 'not-valid';
+  element.parentElement.classList.add('not-valid');
   element.parentElement.classList.remove('valid');
   element.parentElement.lastElementChild.hidden = false;
 
@@ -159,12 +168,20 @@ jobRole.addEventListener('change', (e) => {
 design.addEventListener('change', (e) => {
   // console.log(event.target.value);
   const targ = e.target.value;
+  // const target = e.target;
+  // console.log(target);
   const dataT = shirtColors.querySelectorAll('option');
-  // console.log(dataT);
+  console.log(dataT);
   // const dataT = shirtColors.children;
   // const designOpt = design.querySelectorAll('option');
   // console.log(typeof targ);
   shirtColors.disabled = false;
+
+  if (targ === 'js puns') {
+    defaultJsPuns.selected = true;
+  } else if (targ === 'heart js') {
+    defaultLoveJs.selected = true;
+  }
 
   // const designOptAtr = designOpt.getAttribute("data-theme");
   // const designOptAtr = designOpt.querySelectorAll('[data-theme="js puns"]');
@@ -173,32 +190,38 @@ design.addEventListener('change', (e) => {
   // console.log(designOpt);
   // console.log(dataT.dataset.theme);
 
-
-
   for (let i = 0; i < dataT.length; i++) {
     const dataTheme = dataT[i].dataset.theme;
-    // console.log(dataTheme);
+    console.log(dataTheme);
+
+    if (targ === dataTheme) {
+      dataT[i].hidden = false;
+    } else {
+      dataT[i].hidden = true;
+    }
+
+    // if (targ === dataTheme) {
+    //   if (dataTheme.value === 'js puns') {
+    //     dataT[i].hidden = false;
+    //     defaultJsPuns.selected;
+    //   } else if (dataTheme.value === 'heart js') {
+    //     dataT[i].hidden = false;
+    //     defaultLoveJs.selected;
+    //   }
+    // }
 
     // if (targ === dataTheme) {
     //   dataT[i].hidden = false;
+    //   // dataT[i].firstChild.selected;
     // } else {
     //   dataT[i].hidden = true;
+
     // }
 
-    if (targ === dataTheme) {
-      if (dataTheme === 'js puns') {
-        dataT[i].hidden = false;
-        defaultJsPuns.selected;
-      } else if (dataTheme === 'heart js') {
-        dataT[i].hidden = false;
-        defaultLoveJs.selected;
-      }
-    }
-
-    // if (targ === dataTheme && 'js puns') {
+    // if (targ === dataTheme.value && 'js puns') {
     //   defaultJsPuns.selected;
     //   dataT[i].hidden = false;
-    // } else if (targ === dataTheme && 'heart js') {
+    // } else if (targ === dataTheme.value && 'heart js') {
     //   defaultLoveJs.selected;
     //   dataT[i].hidden = false;
     // }
@@ -321,7 +344,7 @@ const activitiesValidator = () => {
 
   //Passing in "activities" in "validationPass" the red border bleeds into Exp Date, Exp Year and the caution sign is in the top right corner of the screen? 
 
-  // Using 'activities' erases or pushed the button out of frame when at least one activity is selected. 
+  // Using 'activities' erases or pushed the button out of frame when at least one activity is selected. And also when the classList is adjusted to not override the original class the Caution sign is still at the very top of the screen, so this tells me that the "activities" is not the best choice. I get also why now the "caution" signal is all the way up top because in the function were looking for the parent element, so the signal is all the way at the top because it told to go to the parent element. 
   // if (activitiesValidatorIsValid) {
   //   validationPass(activities);
   //   activitiesHint.style.display = 'none';
@@ -343,7 +366,7 @@ const activitiesValidator = () => {
     validationFail(activityLegend);
   }
 
-  return activitiesValidatorIsValid;
+  // return activitiesValidatorIsValid;
 
   // for (let i = 0; i < inputActivities.length; i++) {
   //   if (activitiesValidatorIsValid) {
