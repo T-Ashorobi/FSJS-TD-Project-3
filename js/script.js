@@ -363,19 +363,14 @@ const activitiesValidator = () => {
 
   if (activitiesValidatorIsValid) {
     validationPass(activityLegend);
+    activitiesHint.style.display = 'none';
   } else {
     validationFail(activityLegend);
+    activitiesHint.style.display = 'block';
   }
 
-  // return activitiesValidatorIsValid;
-
-  // for (let i = 0; i < inputActivities.length; i++) {
-  //   if (activitiesValidatorIsValid) {
-  //     validationPass(i);
-  //   } else {
-  //     validationFail(i);
-  //   }
-  // }
+  return activitiesValidatorIsValid;
+  //I think this was the issue. I would fill all of the information but the page wouldn't send. I accidently commented off "return activitiesValidatorIsValid" so the value could not be returned and used. Now that I uncommented it when all the information is in and I submit the page goes into that crash thing. 
 }
 
 const ccValidator = () => {
@@ -433,7 +428,7 @@ const cvvValidator = () => {
 
 //Submit information section
 
-form.addEventListener('submit', (e) => {
+form.addEventListener('submit', e => {
   // e.preventDefault();
   // nameValidator();
   // emailValidator();
@@ -443,7 +438,7 @@ form.addEventListener('submit', (e) => {
     console.log("the nameValidator IF statement works");
   }
 
-  if (emailValidator() === false) {
+  if (!emailValidator()) {
     e.preventDefault();
     console.log("The emailValidator IF statement works");
   }
@@ -467,12 +462,5 @@ form.addEventListener('submit', (e) => {
     e.preventDefault();
     console.log('The cvvValidator IF statement works.');
   }
-})
+});
 
-//Listen for change in fieldset to check for focus and blur events. 
-
-// activities.addEventListener('focus', (e) => {
-//   const eventTarget = e.target;
-//   eventTarget.style.background = 'red';
-//   focusTab();
-// })
