@@ -18,6 +18,7 @@ console.log(defaultJsPuns);
 const defaultLoveJs = shirtColors.querySelector('option:nth-child(5)');
 console.log(defaultLoveJs);
 
+
 //show specific colors shirt list
 // const heartJs = shirtColors.querySelectorAll('option:nth-child(3n)');
 // console.log(heartJs);
