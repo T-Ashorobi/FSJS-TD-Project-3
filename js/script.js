@@ -131,16 +131,6 @@ for (let i = 0; i < inputActivities.length; i++) {
     }
   });
 
-  // activities.addEventListener('focus', e => {
-  //   const eTarget = e.target;
-  //   if (inputActivities[i] === eTarget) {
-  //     inputActivities[i].parentNode.className = 'focus';
-  //     if (inputActivities[i].parentNode.className === 'focus') {
-  //       inputActivities[i].style.backgroundColor = 'red';
-  //     }
-  //   }
-  // }, true);
-
   inputActivities[i].addEventListener('blur', e => {
     // const eTag = e.target;
     const eTarget = e.target;
@@ -149,8 +139,6 @@ for (let i = 0; i < inputActivities.length; i++) {
       // eTarget.parentNode.classList.remove('focus');
     }
   })
-
-  // if (inputActivities[i] === eTarget && inputActivities[i].parentNode.className === 'focus')
 
 }
 
@@ -168,15 +156,9 @@ jobRole.addEventListener('change', (e) => {
 
 //What i want to do here is to have the event listener listen for a change from the design drop down. Create a variable for e.target.value and a variable for the data-theme. Create an IF statement where if the e.target.value matches the selected design option value then i'll create a statement within the code block, else if it matches the other design value then the other code block will run. 
 design.addEventListener('change', (e) => {
-  // console.log(event.target.value);
   const targ = e.target.value;
-  // const target = e.target;
-  // console.log(target);
   const dataT = shirtColors.querySelectorAll('option');
   console.log(dataT);
-  // const dataT = shirtColors.children;
-  // const designOpt = design.querySelectorAll('option');
-  // console.log(typeof targ);
   shirtColors.disabled = false;
 
   //Below I needed to create this to have a default behavior once a design is selected. I had an issue where if I selected a design then chose a color and then decided to switch my design the original color I chose does not automatically update. Now when I choose a design I gave it a default color, and if I switch designs it'll automatically switch to the other designs default color.  
@@ -185,13 +167,6 @@ design.addEventListener('change', (e) => {
   } else if (targ === 'heart js') {
     defaultLoveJs.selected = true;
   }
-
-  // const designOptAtr = designOpt.getAttribute("data-theme");
-  // const designOptAtr = designOpt.querySelectorAll('[data-theme="js puns"]');
-  // console.log(dataT);
-  // console.log(designOptAtr);
-  // console.log(designOpt);
-  // console.log(dataT.dataset.theme);
 
   for (let i = 0; i < dataT.length; i++) {
     const dataTheme = dataT[i].dataset.theme;
@@ -202,32 +177,6 @@ design.addEventListener('change', (e) => {
     } else {
       dataT[i].hidden = true;
     }
-
-    // if (targ === dataTheme) {
-    //   if (dataTheme.value === 'js puns') {
-    //     dataT[i].hidden = false;
-    //     defaultJsPuns.selected;
-    //   } else if (dataTheme.value === 'heart js') {
-    //     dataT[i].hidden = false;
-    //     defaultLoveJs.selected;
-    //   }
-    // }
-
-    // if (targ === dataTheme) {
-    //   dataT[i].hidden = false;
-    //   // dataT[i].firstChild.selected;
-    // } else {
-    //   dataT[i].hidden = true;
-
-    // }
-
-    // if (targ === dataTheme.value && 'js puns') {
-    //   defaultJsPuns.selected;
-    //   dataT[i].hidden = false;
-    // } else if (targ === dataTheme.value && 'heart js') {
-    //   defaultLoveJs.selected;
-    //   dataT[i].hidden = false;
-    // }
 
     // This section took a long time for me to understand. I decided to refer to the walkthough for this portion and from what I understood I wrote the code written below. Now when I read this its more clear. If true then the options the [i] is on isn't hidden, else the other set of [i] is hidden. 
 
@@ -456,63 +405,6 @@ const cvvValidator = () => {
   return cvvIsValid;
 }
 
-// const paypalValidator = () => {
-//   // const paypalValue =
-//   if (paypal.selected = true) {
-//     validationPass(paypal);
-//   } else {
-//     validationFail(paypal);
-//   }
-
-// }
-
-// const paypalValidator = () => {
-//   const paypalValue = 'paypal';
-//   const paypalIsValid = /^paypal$/.test(paypalValue);
-//   console.log('The value for paypalIsValid is:', paypalIsValid);
-
-//   if (paypalIsValid) {
-//     validationPass(paypal);
-//   } else {
-//     validationFail(paypal);
-//   }
-//   return paypalIsValid;
-// }
-
-// const paypalValidator = () => {
-//   const paypalSelector = paypal.selected;
-//   if (paypalSelector === true) {
-//     validationPass(paypal);
-//   } else if (paypalSelector === false) {
-//     validationFail(paypal);
-//   }
-//   console.log('The Value for paypalSelector is:', paypalSelector);
-//   return paypalSelector;
-// }
-
-// const paypalValidator = () => {
-//   const paypalValidator = paypal.selected = true;
-//   if (paypalValidator) {
-//     validationPass(paypal);
-//   } else {
-//     validationFail(paypal);
-//   }
-//   console.log('The Value for paypalValidator is:', paypalValidator);
-//   return paypalValidator;
-// }
-
-// const paypalValidator = () => {
-//   const paypalTrue = paypal.selected = true;
-//   const paypalFalse = paypal.selected = false;
-//   if (paypalTrue) {
-//     validationPass(paypal);
-//   } else if (paypalFalse) {
-//     validationFail(paypal);
-//   }
-//   console.log('The Value for paypalSelector is:', paypalSelector);
-//   return paypalSelector;
-// }
-
 //A great video explaning the method of "preventDefault": https://www.youtube.com/watch?v=3SNyh57XSIA
 
 //Submit information section
@@ -527,6 +419,7 @@ form.addEventListener('submit', e => {
   // console.log(testVal);
   const target = e.target;
   console.log(target);
+  // const payByCC = !document.getElementById('credit-card').hasAttribute('hidden');
 
   if (!nameValidator()) {
     e.preventDefault();
@@ -544,70 +437,25 @@ form.addEventListener('submit', e => {
   }
 
   // if (target === 'credit-card') {
+  // I was having an issue where if I chose another form of payment besides credit card the form wouldnt submit because the the credit card field was not filled out. Over time I thought more and more about it and it made sense why this happens. The way my submit form is written each time I hit the submit button it will check each if statement listed. The CVV, ZIP and CC# are always checked even though I didnt choose the credit card payment. To alleviate this I needed to create another level of code to further specify if when the CVV, ZIP and CC# should be checked. Initially the code i wrote above did not make sense. Since this is a "submit" event handler, using e.target is completly different than when I use that method in a "change" or other types of handlers. So what I wrote below if the payment value is equal to the string credit-card then whats written in the code block will run. 
+  if (document.getElementById('payment').value === 'credit-card') {
+    if (!ccValidator()) {
+      e.preventDefault();
+      console.log("The ccValidator IF statement works.");
+    }
 
-  if (!ccValidator()) {
-    e.preventDefault();
-    console.log("The ccValidator IF statement works.");
+    if (!zipValidator()) {
+      e.preventDefault();
+      console.log("The zipValidator IF statement works.");
+    }
+
+    if (!cvvValidator()) {
+      e.preventDefault();
+      console.log('The cvvValidator IF statement works.');
+    }
   }
-
-  if (!zipValidator()) {
-    e.preventDefault();
-    console.log("The zipValidator IF statement works.");
-  }
-
-  if (!cvvValidator()) {
-    e.preventDefault();
-    console.log('The cvvValidator IF statement works.');
-  }
-  // }
-
-  // if (!paypalValidator()) {
-  //   e.preventDefault();
-  //   console.log('The paypalValidator IF statement works.');
   // }
 });
 
 // I tried creating two submit because my credit card section is messing up. I thought if i single out the credit card portion It would fix the problem but it didnt. WHen the first half of the form is filled correctly and the credit card section isn't, the form still sends. It makes sense since the first half is correct. 
 
-// form.addEventListener('submit', e => {
-//   // e.preventDefault();
-//   // nameValidator();
-//   // emailValidator();
-
-//   if (!nameValidator()) {
-//     e.preventDefault();
-//     console.log("the nameValidator IF statement works");
-//   }
-
-//   if (!emailValidator()) {
-//     e.preventDefault();
-//     console.log("The emailValidator IF statement works");
-//   }
-
-//   if (!activitiesValidator()) {
-//     e.preventDefault();
-//     console.log("The activitiesValidator IF statement works.");
-//   }
-// });
-
-// document.querySelector('#credit-card').addEventListener('submit', e => {
-//   if (!ccValidator()) {
-//     e.preventDefault();
-//     console.log("The ccValidator IF statement works.");
-//   }
-
-//   if (!zipValidator()) {
-//     e.preventDefault();
-//     console.log("The zipValidator IF statement works.");
-//   }
-
-//   if (!cvvValidator()) {
-//     e.preventDefault();
-//     console.log('The cvvValidator IF statement works.');
-//   }
-
-//   // if (!paypalValidator()) {
-//   //   e.preventDefault();
-//   //   console.log('The paypalValidator IF statement works.');
-//   // }
-// });
