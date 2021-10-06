@@ -265,7 +265,7 @@ payment.addEventListener('change', (e) => {
 // Form Validation
 const nameValidator = () => {
   const nameValue = name.value;
-  const nameIsValid = /^[a-zA-Z]+ ?[a-zA-Z]*? ?[a-zA-Z]+?$/.test(nameValue);
+  const nameIsValid = /^[a-zA-Z]+ ?[a-zA-Z]*? ?[a-zA-Z]?$/.test(nameValue);
   console.log('The value for nameIsValid is:', nameIsValid);
   // alert("Please input a valid First name.");
 
