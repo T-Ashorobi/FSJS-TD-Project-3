@@ -57,10 +57,14 @@ let totalCost = 0;
 
 // grab payment ID
 const payment = document.getElementById('payment');
+console.log(payment);
 const selectMethod = payment.querySelector('option:nth-child(2)');
 const creditCard = document.getElementById('credit-card');
+console.log(creditCard);
 const paypal = document.querySelector('#paypal');
+console.log(paypal);
 const bitcoin = document.querySelector('#bitcoin');
+console.log(bitcoin);
 
 //Hide paypal and bitcoin if not selected and set Credit Card as initial option.
 paypal.hidden = true;
@@ -84,8 +88,6 @@ const cvv = document.getElementById('cvv');
 //grabbing <form>
 const form = document.querySelector('form');
 // console.log(form);
-
-
 
 
 const activityLabel = document.querySelectorAll('.activities-box label');
@@ -283,23 +285,53 @@ document.querySelector('#activities').addEventListener('change', (e) => {
 })
 
 // Payment Info
+// payment.addEventListener('change', (e) => {
+//   target = e.target.value;
+//   console.log(target);
+//   if (target === 'paypal') {
+//     paypal.hidden = false;
+//     creditCard.hidden = true;
+//     bitcoin.hidden = true;
+//     // console.log("paypal check works")
+//   } else if (target === 'bitcoin') {
+//     bitcoin.hidden = false;
+//     creditCard.hidden = true;
+//     paypal.hidden = true;
+//     // console.log("bitcoin test works")
+//   } else if (target === 'credit-card') {
+//     creditCard.hidden = false;
+//     paypal.hidden = true;
+//     bitcoin.hidden = true;
+//     // console.log('credit-card check works')
+//   }
+// })
+
 payment.addEventListener('change', (e) => {
   target = e.target.value;
   console.log(target);
   if (target === 'paypal') {
     paypal.hidden = false;
+    paypal.disabled = false;
     creditCard.hidden = true;
+    creditCard.disabled = true;
     bitcoin.hidden = true;
+    bitcoin.disabled = true;
     // console.log("paypal check works")
   } else if (target === 'bitcoin') {
     bitcoin.hidden = false;
+    bitcoin.disabled = false;
     creditCard.hidden = true;
+    creditCard.disabled = true;
     paypal.hidden = true;
+    paypal.disabled = true;
     // console.log("bitcoin test works")
   } else if (target === 'credit-card') {
     creditCard.hidden = false;
+    creditCard.disabled = false;
     paypal.hidden = true;
+    paypal.disabled = true;
     bitcoin.hidden = true;
+    bitcoin.disabled = true;
     // console.log('credit-card check works')
   }
 })
@@ -424,6 +456,63 @@ const cvvValidator = () => {
   return cvvIsValid;
 }
 
+// const paypalValidator = () => {
+//   // const paypalValue =
+//   if (paypal.selected = true) {
+//     validationPass(paypal);
+//   } else {
+//     validationFail(paypal);
+//   }
+
+// }
+
+// const paypalValidator = () => {
+//   const paypalValue = 'paypal';
+//   const paypalIsValid = /^paypal$/.test(paypalValue);
+//   console.log('The value for paypalIsValid is:', paypalIsValid);
+
+//   if (paypalIsValid) {
+//     validationPass(paypal);
+//   } else {
+//     validationFail(paypal);
+//   }
+//   return paypalIsValid;
+// }
+
+// const paypalValidator = () => {
+//   const paypalSelector = paypal.selected;
+//   if (paypalSelector === true) {
+//     validationPass(paypal);
+//   } else if (paypalSelector === false) {
+//     validationFail(paypal);
+//   }
+//   console.log('The Value for paypalSelector is:', paypalSelector);
+//   return paypalSelector;
+// }
+
+// const paypalValidator = () => {
+//   const paypalValidator = paypal.selected = true;
+//   if (paypalValidator) {
+//     validationPass(paypal);
+//   } else {
+//     validationFail(paypal);
+//   }
+//   console.log('The Value for paypalValidator is:', paypalValidator);
+//   return paypalValidator;
+// }
+
+// const paypalValidator = () => {
+//   const paypalTrue = paypal.selected = true;
+//   const paypalFalse = paypal.selected = false;
+//   if (paypalTrue) {
+//     validationPass(paypal);
+//   } else if (paypalFalse) {
+//     validationFail(paypal);
+//   }
+//   console.log('The Value for paypalSelector is:', paypalSelector);
+//   return paypalSelector;
+// }
+
 //A great video explaning the method of "preventDefault": https://www.youtube.com/watch?v=3SNyh57XSIA
 
 //Submit information section
@@ -432,6 +521,12 @@ form.addEventListener('submit', e => {
   // e.preventDefault();
   // nameValidator();
   // emailValidator();
+  // const nameVar = name.value;
+  // console.log(nameVar);
+  // const testVal = nameValidator();
+  // console.log(testVal);
+  const target = e.target;
+  console.log(target);
 
   if (!nameValidator()) {
     e.preventDefault();
@@ -448,6 +543,8 @@ form.addEventListener('submit', e => {
     console.log("The activitiesValidator IF statement works.");
   }
 
+  // if (target === 'credit-card') {
+
   if (!ccValidator()) {
     e.preventDefault();
     console.log("The ccValidator IF statement works.");
@@ -462,5 +559,55 @@ form.addEventListener('submit', e => {
     e.preventDefault();
     console.log('The cvvValidator IF statement works.');
   }
+  // }
+
+  // if (!paypalValidator()) {
+  //   e.preventDefault();
+  //   console.log('The paypalValidator IF statement works.');
+  // }
 });
 
+// I tried creating two submit because my credit card section is messing up. I thought if i single out the credit card portion It would fix the problem but it didnt. WHen the first half of the form is filled correctly and the credit card section isn't, the form still sends. It makes sense since the first half is correct. 
+
+// form.addEventListener('submit', e => {
+//   // e.preventDefault();
+//   // nameValidator();
+//   // emailValidator();
+
+//   if (!nameValidator()) {
+//     e.preventDefault();
+//     console.log("the nameValidator IF statement works");
+//   }
+
+//   if (!emailValidator()) {
+//     e.preventDefault();
+//     console.log("The emailValidator IF statement works");
+//   }
+
+//   if (!activitiesValidator()) {
+//     e.preventDefault();
+//     console.log("The activitiesValidator IF statement works.");
+//   }
+// });
+
+// document.querySelector('#credit-card').addEventListener('submit', e => {
+//   if (!ccValidator()) {
+//     e.preventDefault();
+//     console.log("The ccValidator IF statement works.");
+//   }
+
+//   if (!zipValidator()) {
+//     e.preventDefault();
+//     console.log("The zipValidator IF statement works.");
+//   }
+
+//   if (!cvvValidator()) {
+//     e.preventDefault();
+//     console.log('The cvvValidator IF statement works.');
+//   }
+
+//   // if (!paypalValidator()) {
+//   //   e.preventDefault();
+//   //   console.log('The paypalValidator IF statement works.');
+//   // }
+// });
