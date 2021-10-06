@@ -179,34 +179,10 @@ design.addEventListener('change', (e) => {
     }
 
     // This section took a long time for me to understand. I decided to refer to the walkthough for this portion and from what I understood I wrote the code written below. Now when I read this its more clear. If true then the options the [i] is on isn't hidden, else the other set of [i] is hidden. 
-
-    // if (targ === dataTheme && dataT[i].dataset.theme) {
-    //   dataT[i].dataset.theme.hidden = true;
-    //   dataTheme.hidden = false;
-    //   console.log('if true works')
-    // } else if (dataT[i].dataset.theme) {
-    //   dataT[i].dataset.theme.hidden = false;
-    //   dataTheme.hidden = true;
-    //   // console.log("else works")
-    // }
   }
 
 
-  // if (targ === 'heart js') {
-  //   console.log('wow the IF statement runs');
-  //   shirtColors.disabled = false;
-  //   for (let i = 0; i < dataT.length; i++) {
-  //     const currentDt = dataT[i].dataset.theme;
-  //     // currentDt.dataset.theme
-  //     if (targ === currentDt) {
-  //       console.log('wow we are in an if to for to if statment!')
-  //       // currentDt.dataset.theme.disabled = false;
-  //       dataT[i].classList.add('disabled');
 
-  //     }
-  //   }
-  // }
-  // console.log('testing', designOpt.value[1]);
   console.log('Squeaky clean so far');
 })
 
