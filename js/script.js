@@ -263,6 +263,7 @@ payment.addEventListener('change', (e) => {
 })
 
 // Form Validation
+// The nameValidator will check if at least the first name is filled out and or the box isnt left blank. 
 const nameValidator = () => {
   const nameValue = name.value;
   const nameIsValid = /^[a-zA-Z]+ ?[a-zA-Z]*? ?[a-zA-Z]?$/.test(nameValue);
